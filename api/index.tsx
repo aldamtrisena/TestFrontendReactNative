@@ -47,10 +47,26 @@ export interface Weight {
   metric: string;
 }
 
-export const fetchCatListAPI = async (limit: number): Promise<Cat[]> => {
+export interface DetailImage {
+  id: string;
+  url: any;
+  width: number;
+  height: number;
+}
+
+export const fetchCatListAPI = async (): Promise<Cat[]> => {
+  try {
+    const res = await axios.get('https://api.thecatapi.com/v1/breeds');
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchImageByIdAPI = async (id: string): Promise<DetailImage[]> => {
   try {
     const res = await axios.get(
-      `https://api.thecatapi.com/v1/breeds?limit=${limit}`,
+      `https://api.thecatapi.com/v1/images/search?breed_ids=${id}`,
     );
     return res.data;
   } catch (error) {
